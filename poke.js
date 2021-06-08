@@ -1,5 +1,6 @@
 const poke_container = document.getElementById('poke_container') ; 
-const pokemons_number = 150 ; 
+let pokemons_number = 150 ; 
+var min= 1 ; 
 const colors = {
     fire: '#FDDFDF',
     grass: '#DEFDE0',
@@ -19,9 +20,18 @@ const colors = {
 
 const main_types = Object.keys(colors) ; 
 
+
+
+//recherche
+function findPoke() {
+    var input = document.getElementById("find").value;
+    document.getElementById('poke_container').innerHTML = "";
+    getPokemon(input) ; 
+}
+//base 
 const fetchPokemons = async() => { 
-    for (let i = 1 ;i<= pokemons_number ; i++){
-        await getPokemon(i) ; 
+    for (min ;min<= pokemons_number ; min++){
+        await getPokemon(min) ; 
     }
 }
 const getPokemon = async id => {
@@ -31,6 +41,13 @@ const getPokemon = async id => {
     createPokemonsCard(pokemon) ; 
 }
 
+function getValue() {
+    var max = document.getElementById("max").value;
+     min = document.getElementById("min").value;
+    document.getElementById('poke_container').innerHTML = "";
+    pokemons_number = max; 
+   fetchPokemons() ; 
+}
 
 function createPokemonsCard(pokemon){
     const pokemonEl = document.createElement('div');
@@ -39,8 +56,16 @@ function createPokemonsCard(pokemon){
     //type
     const poke_types = pokemon.types.map(element => element.type.name) ; 
     const type = main_types.find(type =>poke_types.indexOf(type) > -1 ); 
-
     const secondary_type = main_types.find(type =>poke_types.indexOf(type) > 0 ); ; 
+    let essaie ; 
+  
+    if (secondary_type === undefined || secondary_type == type  ) {
+       essaie = type ; 
+    }
+    else { 
+         essaie = type+ (', ') + secondary_type; 
+    } 
+
 
     //nom 
     const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
@@ -54,7 +79,7 @@ function createPokemonsCard(pokemon){
      <div class="info">
         <span class="number">#${pokemon.id.toString().padStart(3,'0')}</span>
         <h3 class="name"> ${name} </h3>
-        <small class="type">Type : <span> ${type} , ${secondary_type}  </span> </small>
+        <small class="type">Type : <span> ${essaie} </span> </small>
      </div>
     `;
 
