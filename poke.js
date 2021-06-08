@@ -73,7 +73,8 @@ function createPokemonsCard(pokemon){
     pokemonEl.style.backgroundColor = color ; 
     //vue
     const pokeInnerHTML = `
-    <div class="img-container">
+    <div class="img-container" onclick="carte(${pokemon.id})" id =" ${pokemon.id}">
+
         <img src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png" alt="${name}" /> 
      </div>
      <div class="info">
@@ -87,5 +88,9 @@ function createPokemonsCard(pokemon){
     poke_container.appendChild(pokemonEl); 
 }
 
+function carte (id_transmis) {
+   var card =  document.getElementById(id_transmis); 
+   car.style.marginLeft="5em";
+}
 
 fetchPokemons() ; 
